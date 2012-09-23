@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8"> 
+	<meta http-equiv="pragma" content="no-cache">
+	<title>Gamepad</title> 
+	<link rel="stylesheet" href="style/gamepad.css" type="text/css" />
+	</head>
+	<body>
+	<script>
+		var controller;
+
+		window.addEventListener("MozGamepadConnected", onGamepadConnected);
+		window.addEventListener("MozGamepadDisconnected", onGamepadDisconnected);
+   		window.addEventListener("MozGamepadButtonDown", onGamepadButtonDown);
+    	window.addEventListener("MozGamepadButtonUp", onGamepadButtonUp);
+
+		// Run When a gamepad is connected
+		function onGamepadConnected(e) {
+			console.log("Gamepad connected");
+			//controller = e.gamepad;
+			//console.log("Controller: " + controller.id);
+		}
+
+		// Run When a gamepad is disconnected
+		function onGamepadDisconnected(e) {
+			console.log("Gamepad disconnected");
+			//console.log("Controller: " + controller.id);
+		}
+
+	    function onGamepadButtonDown(e) {
+	      console.log("Button pressed");
+	      console.log("Button: " + e.button);
+	    }
+
+	    function onGamepadButtonUp(e) {
+	      //console.log("Button released");
+	      //console.log("Button: " + e.button);
+	    }
+	</script>
+  <iframe src="http://jsbin.com/eyucid/2" width="100%" height="100%"></iframe>
+	</body>
+</html>

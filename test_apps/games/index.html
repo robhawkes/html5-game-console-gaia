@@ -1,0 +1,36 @@
+<!-- Add more controls to make things easier: "Next Game", and "Rotate Screen" -->
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8"> 
+	<meta http-equiv="pragma" content="no-cache">
+	<title>Games</title> 
+	<link rel="stylesheet" href="style/games.css" type="text/css" />
+	</head>
+	<body>
+	<nav>
+		<a href="javascript:goBack()">Back</a>
+		<a href="javascript:(function(){var%20script=gameframe.contentDocument.createElement('script');script.src='http://github.com/mrdoob/stats.js/raw/master/build/Stats.js';gameframe.contentDocument.body.appendChild(script);script=gameframe.contentDocument.createElement('script');script.innerHTML='var%20interval=setInterval(function(){if(typeof%20Stats==\'function\'){clearInterval(interval);var%20stats=new%20Stats();stats.domElement.style.position=\'fixed\';stats.domElement.style.left=\'0px\';stats.domElement.style.top=\'29px\';stats.domElement.style.zIndex=\'10000\';gameframe.contentDocument.body.appendChild(stats.domElement);setInterval(function(){stats.update();},1000/60);}},100);';gameframe.contentDocument.body.appendChild(script);})();">FPS</a>
+		<a href="javascript:rotate()">Rotate</a>
+	</nav>
+	<iframe id="gameframe" src="http://robinhawkes.com/b2g"></iframe>
+	<script>
+		var gameframe = document.getElementById("gameframe");
+		var orientation = "portrait";
+		
+		function goBack() {
+			gameframe.contentWindow.history.back();
+		}
+
+		function rotate() {
+			if (orientation == "portrait") {
+				screen.mozLockOrientation("landscape");
+				orientation = "landscape";
+			} else {
+				screen.mozLockOrientation("portrait");
+				orientation = "portrait";
+			}
+		}
+	</script>
+	</body>
+</html>

@@ -1,0 +1,36 @@
+html, body {
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+}
+
+nav {
+  left: 0;
+  position: absolute;
+  text-align: center;
+  text-decoration: none;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+  nav a {
+    background: #222;
+    color: #fff;
+    display: block;
+    float: left;
+    padding: 5px 0;
+    width: 33.3%;
+  }
+
+#gameframe {
+  top: 0px;
+  left: 0px;
+  margin: 0px;
+  padding: 0px;
+  border-width: 0px;
+  height:100%;
+  width: 100%;
+}
