@@ -79,6 +79,65 @@ const GridManager = (function() {
         }
 
         break;
+
+      case 'MozGamepadButtonDown':
+        // xBox A is 0
+        // xBox B is 1
+        // xBox X is 2
+        // xBox Y is 3
+        // xBox Back is 9
+        // xBox Start is 8
+        // xBox Home is 10
+        // xBox DPad up is 11
+        // xBox DPad down is 12
+        // xBox DPad left is 13
+        // xBox DPad right is 14
+
+        switch (evt.button) {
+          case 13:
+            isPanning = true;
+            goToPreviousPage(function() {
+              isPanning = false;
+            });
+            break;
+          case 14:
+            isPanning = true;
+            goToNextPage(function() {
+              isPanning = false;
+            });
+            break;
+        }
+        break;
+      case 'MozGamepadAxisMove':
+        // xBox left stick X is 0
+        // xBox left stick Y is 1
+        // xBox right stick X is 2
+        // xBox right stick Y is 3
+        // xBox left trigger is 4
+        // xBox right trigger is 5
+
+        if (isPanning) {
+          return;
+        }
+
+        switch (evt.axis) {
+          case 0:
+            if (evt.value < -0.5) {
+              isPanning = true;
+              goToPreviousPage();
+              setTimeout(function() {
+                isPanning = false;
+              }, 250);
+            } else if (evt.value > 0.5) {
+              isPanning = true;
+              goToNextPage();
+              setTimeout(function() {
+                isPanning = false;
+              }, 250);
+            }
+            break;
+        }
+      break;
     }
   }
 
@@ -123,11 +182,17 @@ const GridManager = (function() {
   function attachEvents() {
     window.addEventListener('mousemove', handleEvent);
     window.addEventListener('mouseup', handleEvent);
+    window.addEventListener("MozGamepadButtonDown", handleEvent);
+    window.addEventListener("MozGamepadButtonUp", handleEvent);
+    window.addEventListener("MozGamepadAxisMove", handleEvent);
   }
 
   function releaseEvents() {
     window.removeEventListener('mousemove', handleEvent);
     window.removeEventListener('mouseup', handleEvent);
+    window.addEventListener("MozGamepadButtonDown", handleEvent);
+    window.addEventListener("MozGamepadButtonUp", handleEvent);
+    window.addEventListener("MozGamepadAxisMove", handleEvent);
   }
 
 
@@ -494,6 +559,9 @@ const GridManager = (function() {
 
       container.addEventListener('contextmenu', handleEvent);
       container.addEventListener('mousedown', handleEvent, true);
+
+      // Forcefully register event handlers so gamepad controls work
+      attachEvents();
 
       limits.left = container.offsetWidth * 0.05;
       limits.right = container.offsetWidth * 0.95;

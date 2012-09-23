@@ -94,6 +94,40 @@
     }
   });
 
+  // Gamepad controls
+  function onGamepadButtonDown(e) {
+    // xBox A is 0
+    // xBox B is 1
+    // xBox X is 2
+    // xBox Y is 3
+    // xBox Back is 9
+    // xBox Start is 8
+    // xBox Home is 10
+    // xBox DPad up is 11
+    // xBox DPad down is 12
+    // xBox DPad left is 13
+    // xBox DPad right is 14
+    
+    //console.log("Button: " + e.button);
+
+    switch (e.button) {
+      case 10:
+        state.process('home-button-press');
+        break;
+    }
+  }
+
+  function onGamepadButtonUp(e) {
+    switch (e.button) {
+      case 10:
+        state.process('home-button-release');
+        break;
+    }
+  }
+
+  window.addEventListener("MozGamepadButtonDown", onGamepadButtonDown);
+  window.addEventListener("MozGamepadButtonUp", onGamepadButtonUp);
+
   // The base state is the default, when no hardware buttons are pressed
   var baseState = {
     process: function(type) {
