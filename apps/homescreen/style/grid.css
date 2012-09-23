@@ -36,11 +36,16 @@ body[data-transitioning] .apps > div {
 }
 
 .apps ol > li {
+  background-color: green;
   position: relative;
   width: 8rem;
   display: inline-block;
   float: left;
   text-align: center;
+}
+
+.apps ol > li[data-active = 'true'] {
+  background-color: red;
 }
 
 .apps ol > li[data-visible = 'false'] {

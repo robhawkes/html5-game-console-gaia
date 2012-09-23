@@ -25,6 +25,8 @@ const GridManager = (function() {
 
   var startEvent, isPanning = false;
 
+  var isIconNavigation = false;
+
   function handleEvent(evt) {
     switch (evt.type) {
       case 'mousedown':
@@ -80,6 +82,44 @@ const GridManager = (function() {
 
         break;
 
+      case 'keydown':
+        // Left arrow is 37
+        // Up arrow is 38
+        // Right arrow is 39
+        // Down arrow is 40
+
+        switch (evt.keyCode) {
+          case 37:
+            if (isIconNavigation) {
+              return;
+            }
+            isPanning = true;
+            goToPreviousPage(function() {
+              isPanning = false;
+            });
+            break;
+          case 38:
+            
+            break;
+          case 39:
+            if (isIconNavigation) {
+              return;
+            }
+            isPanning = true;
+            goToNextPage(function() {
+              isPanning = false;
+            });
+            break;
+          case 40:
+            if (isIconNavigation || isPanning) {
+              return;
+            }
+            activateIconNavigation();
+            break;
+        }
+
+        break;
+
       case 'MozGamepadButtonDown':
         // xBox A is 0
         // xBox B is 1
@@ -94,13 +134,31 @@ const GridManager = (function() {
         // xBox DPad right is 14
 
         switch (evt.button) {
+          case 11:
+            if (isPanning) {
+              return;
+            }
+
+            break;
+          case 12:
+            if (isPanning) {
+              return;
+            }
+            activateIconNavigation();
+            break;
           case 13:
+            if (isIconNavigation) {
+              return;
+            }
             isPanning = true;
             goToPreviousPage(function() {
               isPanning = false;
             });
             break;
           case 14:
+            if (isIconNavigation) {
+              return;
+            }
             isPanning = true;
             goToNextPage(function() {
               isPanning = false;
@@ -116,10 +174,6 @@ const GridManager = (function() {
         // xBox left trigger is 4
         // xBox right trigger is 5
 
-        if (isPanning) {
-          return;
-        }
-
         switch (evt.axis) {
           case 0:
             if (evt.value < -0.5) {
@@ -127,18 +181,24 @@ const GridManager = (function() {
               goToPreviousPage();
               setTimeout(function() {
                 isPanning = false;
-              }, 250);
+              }, 500);
             } else if (evt.value > 0.5) {
               isPanning = true;
               goToNextPage();
               setTimeout(function() {
                 isPanning = false;
-              }, 250);
+              }, 500);
             }
             break;
         }
       break;
     }
+  }
+
+  function activateIconNavigation() {
+    console.log("Activating icon navigation");
+    isIconNavigation = true;
+    pages[currentPage].activateIconNavigation();
   }
 
   function setOverlayPanning(deltaX) {
@@ -182,17 +242,19 @@ const GridManager = (function() {
   function attachEvents() {
     window.addEventListener('mousemove', handleEvent);
     window.addEventListener('mouseup', handleEvent);
+    window.addEventListener("keydown", handleEvent, true);
     window.addEventListener("MozGamepadButtonDown", handleEvent);
     window.addEventListener("MozGamepadButtonUp", handleEvent);
-    window.addEventListener("MozGamepadAxisMove", handleEvent);
+    //window.addEventListener("MozGamepadAxisMove", handleEvent);
   }
 
   function releaseEvents() {
     window.removeEventListener('mousemove', handleEvent);
     window.removeEventListener('mouseup', handleEvent);
-    window.addEventListener("MozGamepadButtonDown", handleEvent);
-    window.addEventListener("MozGamepadButtonUp", handleEvent);
-    window.addEventListener("MozGamepadAxisMove", handleEvent);
+    window.removeEventListener("keydown", handleEvent);
+    window.removeEventListener("MozGamepadButtonDown", handleEvent);
+    window.removeEventListener("MozGamepadButtonUp", handleEvent);
+    //window.removeEventListener("MozGamepadAxisMove", handleEvent);
   }
 
 
