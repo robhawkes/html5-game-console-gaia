@@ -1,0 +1,14 @@
+{
+  "name": "Games",
+  "description": "http://rawkes.com",
+  "launch_path": "/index.html",
+  "fullscreen": true,
+  "developer": {
+    "name": "Rob Hawkes",
+    "url": "http://rawkes.com"
+  },
+  "icons": {
+    "120": "/style/icons/games.png",
+    "60": "/style/icons/60/games.png"
+  }
+}

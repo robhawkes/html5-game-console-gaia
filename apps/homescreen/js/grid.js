@@ -4,7 +4,7 @@
 const GridManager = (function() {
   var container;
 
-  var windowWidth = window.innerWidth;
+  var windowWidth = window.innerWidth * .50;
   var thresholdForPanning = window.innerWidth / 4;
   var thresholdForTapping = 10;
 
@@ -24,6 +24,8 @@ const GridManager = (function() {
   };
 
   var startEvent, isPanning = false;
+
+  var isIconNavigation = false;
 
   function handleEvent(evt) {
     switch (evt.type) {
@@ -79,7 +81,124 @@ const GridManager = (function() {
         }
 
         break;
+
+      case 'keydown':
+        // Left arrow is 37
+        // Up arrow is 38
+        // Right arrow is 39
+        // Down arrow is 40
+
+        switch (evt.keyCode) {
+          case 37:
+            if (isIconNavigation) {
+              return;
+            }
+            isPanning = true;
+            goToPreviousPage(function() {
+              isPanning = false;
+            });
+            break;
+          case 38:
+            
+            break;
+          case 39:
+            if (isIconNavigation) {
+              return;
+            }
+            isPanning = true;
+            goToNextPage(function() {
+              isPanning = false;
+            });
+            break;
+          case 40:
+            if (isIconNavigation || isPanning) {
+              return;
+            }
+            activateIconNavigation();
+            break;
+        }
+
+        break;
+
+      case 'MozGamepadButtonDown':
+        // xBox A is 0
+        // xBox B is 1
+        // xBox X is 2
+        // xBox Y is 3
+        // xBox Back is 9
+        // xBox Start is 8
+        // xBox Home is 10
+        // xBox DPad up is 11
+        // xBox DPad down is 12
+        // xBox DPad left is 13
+        // xBox DPad right is 14
+
+        switch (evt.button) {
+          case 11:
+            if (isPanning) {
+              return;
+            }
+
+            break;
+          case 12:
+            if (isPanning) {
+              return;
+            }
+            activateIconNavigation();
+            break;
+          case 13:
+            if (isIconNavigation) {
+              return;
+            }
+            isPanning = true;
+            goToPreviousPage(function() {
+              isPanning = false;
+            });
+            break;
+          case 14:
+            if (isIconNavigation) {
+              return;
+            }
+            isPanning = true;
+            goToNextPage(function() {
+              isPanning = false;
+            });
+            break;
+        }
+        break;
+      case 'MozGamepadAxisMove':
+        // xBox left stick X is 0
+        // xBox left stick Y is 1
+        // xBox right stick X is 2
+        // xBox right stick Y is 3
+        // xBox left trigger is 4
+        // xBox right trigger is 5
+
+        switch (evt.axis) {
+          case 0:
+            if (evt.value < -0.5) {
+              isPanning = true;
+              goToPreviousPage();
+              setTimeout(function() {
+                isPanning = false;
+              }, 500);
+            } else if (evt.value > 0.5) {
+              isPanning = true;
+              goToNextPage();
+              setTimeout(function() {
+                isPanning = false;
+              }, 500);
+            }
+            break;
+        }
+      break;
     }
+  }
+
+  function activateIconNavigation() {
+    console.log("Activating icon navigation");
+    isIconNavigation = true;
+    pages[currentPage].activateIconNavigation();
   }
 
   function setOverlayPanning(deltaX) {
@@ -123,11 +242,19 @@ const GridManager = (function() {
   function attachEvents() {
     window.addEventListener('mousemove', handleEvent);
     window.addEventListener('mouseup', handleEvent);
+    window.addEventListener("keydown", handleEvent, true);
+    window.addEventListener("MozGamepadButtonDown", handleEvent);
+    window.addEventListener("MozGamepadButtonUp", handleEvent);
+    //window.addEventListener("MozGamepadAxisMove", handleEvent);
   }
 
   function releaseEvents() {
     window.removeEventListener('mousemove', handleEvent);
     window.removeEventListener('mouseup', handleEvent);
+    window.removeEventListener("keydown", handleEvent);
+    window.removeEventListener("MozGamepadButtonDown", handleEvent);
+    window.removeEventListener("MozGamepadButtonUp", handleEvent);
+    //window.removeEventListener("MozGamepadAxisMove", handleEvent);
   }
 
 
@@ -447,9 +574,11 @@ const GridManager = (function() {
     /*
      * Returns the total number of apps for each page. It could be
      * more clever. Currently there're twelve apps for page
+     *
+     * now 10 apps
      */
     getMaxPerPage: function() {
-      return 4 * 4;
+      return 5 * 2;
     },
 
     getNext: function() {
@@ -494,6 +623,9 @@ const GridManager = (function() {
 
       container.addEventListener('contextmenu', handleEvent);
       container.addEventListener('mousedown', handleEvent, true);
+
+      // Forcefully register event handlers so gamepad controls work
+      attachEvents();
 
       limits.left = container.offsetWidth * 0.05;
       limits.right = container.offsetWidth * 0.95;

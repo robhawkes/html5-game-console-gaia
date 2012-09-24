@@ -228,6 +228,7 @@ Icon.prototype = {
 var Page = function(index) {
   this.icons = {};
   this.posLeft = 0;
+  this.currentIcon;
 };
 
 Page.prototype = {
@@ -542,6 +543,140 @@ Page.prototype = {
         icon: icons[node.dataset.origin].descriptor.icon
       };
     });
+  },
+
+  /*
+   * Activate icon navigation
+   */
+  activateIconNavigation: function pg_activateIconNavigation() {
+    // Fix up this horrible event scoping mess!
+    var self = this;
+    window.addEventListener("keydown", function handleNavigationEvent(evt) {
+      self.handleNavigationEvent(evt, self);
+    }, true);
+    window.addEventListener("MozGamepadButtonDown", function handleNavigationEvent(evt) {
+      self.handleNavigationEvent(evt, self);
+    });
+    window.addEventListener("MozGamepadButtonUp", function handleNavigationEvent(evt) {
+      self.handleNavigationEvent(evt, self);
+    });
+    window.addEventListener("MozGamepadAxisMove", function handleNavigationEvent(evt) {
+      self.handleNavigationEvent(evt, self);
+    });
+
+    var firstIcon = self.getFirstIcon();
+    firstIcon.container.dataset.active = true;
+    self.currentIcon = firstIcon;
+  },
+
+  /*
+   * De-ctivate icon navigation
+   */
+  deactivateIconNavigation: function pg_deactivateIconNavigation() {
+    window.removeEventListener("keydown", handleNavigationEvent);
+    window.removeEventListener("MozGamepadButtonDown", handleNavigationEvent);
+    window.removeEventListener("MozGamepadButtonUp", handleNavigationEvent);
+    window.removeEventListener("MozGamepadAxisMove", handleNavigationEvent);
+  },
+
+  /*
+   * Navigation event handler
+   */
+  handleNavigationEvent: function pg_handleNavigationEvent(evt, self) {
+    switch (evt.type) {
+      case 'keydown':
+        // Return is 13
+        // Left arrow is 37
+        // Up arrow is 38
+        // Right arrow is 39
+        // Down arrow is 40
+        switch (evt.keyCode) {
+          case 13:
+            Applications.getByOrigin(self.currentIcon.descriptor.origin).launch();
+            break;
+          case 37:
+            //console.log("Left");
+            if (!self.currentIcon.container.previousSibling) {
+              return;
+            }
+            var newIcon = self.getIcon(self.currentIcon.container.previousSibling.dataset.origin);
+            self.currentIcon.container.dataset.active = false;
+            newIcon.container.dataset.active = true;
+            self.currentIcon = newIcon;
+            break;
+          case 38:
+            //console.log("Up");
+            break;
+          case 39:
+            //console.log("Right");
+            if (!self.currentIcon.container.nextSibling) {
+              return;
+            }
+            var newIcon = self.getIcon(self.currentIcon.container.nextSibling.dataset.origin);
+            self.currentIcon.container.dataset.active = false;
+            newIcon.container.dataset.active = true;
+            self.currentIcon = newIcon;
+            break;
+          case 40:
+            //console.log("Down");
+            break;
+        }
+
+        break;
+      case 'MozGamepadButtonDown':
+        // xBox A is 0
+        // xBox B is 1
+        // xBox X is 2
+        // xBox Y is 3
+        // xBox Back is 9
+        // xBox Start is 8
+        // xBox Home is 10
+        // xBox DPad up is 11
+        // xBox DPad down is 12
+        // xBox DPad left is 13
+        // xBox DPad right is 14
+
+        switch (evt.button) {
+          case 11:
+            console.log("Up");
+            break;
+          case 12:
+            console.log("Down");
+            break;
+          case 13:
+            console.log("Left");
+            break;
+          case 14:
+            console.log("Right");
+            break;
+        }
+        break;
+      case 'MozGamepadAxisMove':
+        // xBox left stick X is 0
+        // xBox left stick Y is 1
+        // xBox right stick X is 2
+        // xBox right stick Y is 3
+        // xBox left trigger is 4
+        // xBox right trigger is 5
+
+        switch (evt.axis) {
+          case 0:
+            if (evt.value < -0.5) {
+              console.log("Left");
+            } else if (evt.value > 0.5) {
+              console.log("Right");
+            }
+            break;
+          case 1:
+            if (evt.value < -0.5) {
+              console.log("Down");
+            } else if (evt.value > 0.5) {
+              console.log("Up");
+            }
+            break;
+        }
+      break;
+    }
   }
 };
 
