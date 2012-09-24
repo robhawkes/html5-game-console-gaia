@@ -4,7 +4,7 @@
 const GridManager = (function() {
   var container;
 
-  var windowWidth = window.innerWidth;
+  var windowWidth = window.innerWidth * .50;
   var thresholdForPanning = window.innerWidth / 4;
   var thresholdForTapping = 10;
 
@@ -574,9 +574,11 @@ const GridManager = (function() {
     /*
      * Returns the total number of apps for each page. It could be
      * more clever. Currently there're twelve apps for page
+     *
+     * now 10 apps
      */
     getMaxPerPage: function() {
-      return 4 * 4;
+      return 5 * 2;
     },
 
     getNext: function() {
