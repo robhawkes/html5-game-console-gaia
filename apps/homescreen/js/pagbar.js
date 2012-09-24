@@ -4,7 +4,7 @@
 const PaginationBar = (function() {
   var style, previousTotal, scroller;
 
-  var dir = document.documentElement.dir === 'rtl' ? -100 : 100;
+  var dir = document.documentElement.dir === 'rtl' ? -20 : 20;
 
   return {
     /*
@@ -25,6 +25,7 @@ const PaginationBar = (function() {
      * @param {String} container that holds the pagination bar
      */
     show: function pb_show() {
+   
       style.visibility = 'visible';
     },
 
@@ -44,6 +45,9 @@ const PaginationBar = (function() {
       }
 
       style.MozTransform = 'translateX(' + current * dir + '%)';
+      if(current === 0) scroller.innerHTML = 'search';
+      else scroller.innerHTML = 'page: '+current;
+
     },
 
     handleEvent: function pb_handleEvent(evt) {

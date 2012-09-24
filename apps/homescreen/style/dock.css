@@ -1,16 +1,15 @@
 #footer {
   width: 100%;
-  height: 75px;
+  height: 100px;
   position: fixed;
   bottom: 0;
   z-index: 10000;
-  background-image: url('../resources/images/footer/background.png');
-  background-size: 100%;
 }
 
 #footer .dockWrapper {
   width: -moz-calc(7 * 7.3rem);
   height: 100%;
+   display: none;
 }
 
 #footer ol {
@@ -49,4 +48,34 @@
 
 #footer li > div > *:not(canvas) {
   display: none;
+}
+
+#footer .controls{
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #6F7475;
+}
+#footer .controls .control{
+	padding-left: 40px;
+	display: none;
+}
+#footer .controls .control.show{
+	display: block;
+}
+#footer .controls .control:before{
+	margin-right: 10px;
+	border-radius: 50%;
+	padding: 0 8px;
+	color: #FFF;
+	box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.4),  inset 0px -1px 2px 0px rgba(255, 255, 255, 0.4);
+	text-shadow: 0px 0px 1px rgba(0,0,0,0.4);
+
+}
+#footer .controls .control.A:before{
+	content: "A";
+	background-color: #58A42E;
+}
+#footer .controls .control.B:before{
+	content: "B";
+	background-color: #972829;
 }
