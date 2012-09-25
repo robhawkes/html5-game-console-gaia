@@ -282,6 +282,7 @@ const GridManager = (function() {
       if (callback) {
         callback();
       }
+
     });
 
     var len = pages.length;
@@ -302,11 +303,15 @@ const GridManager = (function() {
   function goToNextPage(callback) {
     document.body.dataset.transitioning = 'true';
     goToPage(currentPage + 1, callback);
+      var s_pageChangeR =  new Audio('./resources/sounds/right.ogg');
+      s_pageChangeR.play();
   }
 
   function goToPreviousPage(callback) {
     document.body.dataset.transitioning = 'true';
     goToPage(currentPage - 1, callback);
+      var s_pageChangeL =  new Audio('./resources/sounds/left.ogg');
+      s_pageChangeL.play();
   }
 
   function updatePaginationBar() {

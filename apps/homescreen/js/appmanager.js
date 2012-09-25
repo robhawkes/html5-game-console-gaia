@@ -292,7 +292,8 @@ var Applications = (function() {
     if (!app) {
       return;
     }
-
+    var s_launch =  new Audio('./resources/sounds/launch.ogg');
+    s_launch.play();
     app.launch(params);
   }
 
