@@ -5,6 +5,7 @@
 .svn
 *~
 manifest.appcache
+.idea/
 
 /apps/system/camera
 /apps/settings/gaia-commit.txt
