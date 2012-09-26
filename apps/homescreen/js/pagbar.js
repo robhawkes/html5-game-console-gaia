@@ -2,9 +2,9 @@
 'use strict';
 
 const PaginationBar = (function() {
-  var style, previousTotal, scroller;
+  var style, previousTotal, scroller, prev_page;
 
-  var dir = document.documentElement.dir === 'rtl' ? -20 : 20;
+  var dir = document.documentElement.dir === 'rtl' ? -4 : 4;
 
   return {
     /*
@@ -27,6 +27,20 @@ const PaginationBar = (function() {
     show: function pb_show() {
    
       style.visibility = 'visible';
+      if(previousTotal){
+          for(var i=0;i<previousTotal;i++){
+              var title_span = document.createElement("span");
+              title_span.id = "marker_"+i;
+              if(i === 0){
+                  title_span.innerHTML = 'search';
+              }
+              else title_span.innerHTML = 'page: '+i;
+
+              scroller.appendChild(title_span);
+
+          }
+          document.getElementById("marker_0").setAttribute('data-current', 'true'); // Force set search.
+      }
     },
 
     /*
@@ -40,14 +54,13 @@ const PaginationBar = (function() {
       scroller.setAttribute('aria-valuenow', current);
       scroller.setAttribute('aria-valuemax', total - 1);
       if (total && previousTotal !== total) {
-        style.width = (100 / total) + '%';
         previousTotal = total;
       }
+      style.MozTransform = 'translateX(' + -current * dir + '%)';
+        if(document.getElementById("marker_"+prev_page)) document.getElementById("marker_"+prev_page).removeAttribute('data-current');
+        if(document.getElementById("marker_"+current)) document.getElementById("marker_"+current).setAttribute('data-current', 'true');
 
-      style.MozTransform = 'translateX(' + current * dir + '%)';
-      if(current === 0) scroller.innerHTML = 'search';
-      else scroller.innerHTML = 'page: '+current;
-
+        prev_page = current;
     },
 
     handleEvent: function pb_handleEvent(evt) {
