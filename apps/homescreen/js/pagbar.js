@@ -34,7 +34,7 @@ const PaginationBar = (function() {
               if(i === 0){
                   title_span.innerHTML = 'search';
               }
-              else title_span.innerHTML = 'page: '+i;
+              else title_span.innerHTML = 'page '+i;
 
               scroller.appendChild(title_span);
 

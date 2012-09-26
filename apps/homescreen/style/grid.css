@@ -57,6 +57,10 @@ body[data-transitioning] .apps > div {
 	-moz-transform: scale(1.1);
 	box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.4);
 	z-index: 2000;
+    background-color: #159b0f;
+    background: -moz-linear-gradient(-45deg, #58ae56 0%, #159b0f 46%); /* FF3.6+ */
+
+
 }
 .apps ol > li[data-visible = 'false'] {
   visibility: hidden;
