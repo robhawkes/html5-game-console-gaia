@@ -197,6 +197,8 @@ const GridManager = (function() {
 
   function activateIconNavigation() {
     console.log("Activating icon navigation");
+    var s_hover =  new Audio('./resources/sounds/hover.ogg');
+    s_hover.play();
     isIconNavigation = true;
     pages[currentPage].activateIconNavigation();
   }

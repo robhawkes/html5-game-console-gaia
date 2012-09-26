@@ -583,7 +583,9 @@ Page.prototype = {
    * Navigation event handler
    */
   handleNavigationEvent: function pg_handleNavigationEvent(evt, self) {
-    switch (evt.type) {
+      var s_hover =  new Audio('./resources/sounds/hover.ogg');
+
+      switch (evt.type) {
       case 'keydown':
         // Return is 13
         // Left arrow is 37
@@ -592,6 +594,9 @@ Page.prototype = {
         // Down arrow is 40
         switch (evt.keyCode) {
           case 13:
+             // Possibly need to move this sound
+             var s_launch =  new Audio('./resources/sounds/launch.ogg');
+             s_launch.play();
             Applications.getByOrigin(self.currentIcon.descriptor.origin).launch();
             break;
           case 37:
@@ -599,6 +604,7 @@ Page.prototype = {
             if (!self.currentIcon.container.previousSibling) {
               return;
             }
+            s_hover.play();
             var newIcon = self.getIcon(self.currentIcon.container.previousSibling.dataset.origin);
             self.currentIcon.container.dataset.active = false;
             newIcon.container.dataset.active = true;
@@ -612,6 +618,7 @@ Page.prototype = {
             if (!self.currentIcon.container.nextSibling) {
               return;
             }
+            s_hover.play();
             var newIcon = self.getIcon(self.currentIcon.container.nextSibling.dataset.origin);
             self.currentIcon.container.dataset.active = false;
             newIcon.container.dataset.active = true;
