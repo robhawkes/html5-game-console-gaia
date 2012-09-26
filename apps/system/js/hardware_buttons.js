@@ -125,8 +125,29 @@
     }
   }
 
+  // Keyboard controls
+  function onKeydown(e) {
+    // Escape is 
+
+    switch (e.keyCode) {
+      case 27:
+        state.process('home-button-press');
+        break;
+    }
+  }
+
+  function onKeyup(e) {
+    switch (e.keyCode) {
+      case 27:
+        state.process('home-button-release');
+        break;
+    }
+  }
+
   window.addEventListener("MozGamepadButtonDown", onGamepadButtonDown);
   window.addEventListener("MozGamepadButtonUp", onGamepadButtonUp);
+  window.addEventListener("keydown", onKeydown);
+  window.addEventListener("keyup", onKeyup);
 
   // The base state is the default, when no hardware buttons are pressed
   var baseState = {

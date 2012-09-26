@@ -16,7 +16,7 @@
 }
 
 .apps > div.page{
-	  background: url('../resources/images/dropShadow.png') center 50% no-repeat;
+	  background: url('../resources/images/dropShadow.png') center 90% no-repeat;
 	  transition: all 100ms ease-in-out;
 }
 
@@ -45,6 +45,7 @@ body[data-transitioning] .apps > div {
 .apps ol > li {
   position: relative;
   width: 10.5rem;
+  height: 10.5rem;
   display: inline-block;
   float: left;
   text-align: center;
@@ -94,6 +95,7 @@ body[data-transitioning] .apps > div {
   height: 100%;
   width: 100%;
   margin-top: .8rem;
+  position: relative;
   pointer-events: none; /* NO touchable area */
 }
 
@@ -123,9 +125,11 @@ body[data-transitioning] .apps > div {
   white-space: nowrap; /* NO new lines */
   display: block;
   width: 100%; /* At least 6% of margin between labels of different apps */
-  position: relative;
+  position: absolute;
+  bottom: 0;
   height: 2rem; /* 15px in otoro */
   margin: 0 auto;
+  margin-bottom: .8rem;
   padding: 4px 0;
   padding-left: 8px;
   -moz-box-sizing: border-box;

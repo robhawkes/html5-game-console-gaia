@@ -597,6 +597,7 @@ Page.prototype = {
              // Possibly need to move this sound
              var s_launch =  new Audio('./resources/sounds/launch.ogg');
              s_launch.play();
+            console.log("Launch application: " + self.currentIcon.descriptor.origin);
             Applications.getByOrigin(self.currentIcon.descriptor.origin).launch();
             break;
           case 37:
