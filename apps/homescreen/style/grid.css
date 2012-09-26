@@ -16,7 +16,6 @@
 }
 
 .apps > div.page{
-	  background: url('../resources/images/dropShadow.png') center 90% no-repeat;
 	  transition: all 100ms ease-in-out;
 }
 
@@ -34,7 +33,7 @@ body[data-transitioning] .apps > div {
 }
 
 .apps ol {
-  width: -moz-calc(5 * 11rem);
+  width: -moz-calc(4 * 15rem);
   padding: 0;
   list-style-type: none;
   display: block;
@@ -44,12 +43,12 @@ body[data-transitioning] .apps > div {
 
 .apps ol > li {
   position: relative;
-  width: 10.5rem;
+  width: 14rem;
   height: 10.5rem;
   display: inline-block;
   float: left;
   text-align: center;
-  background-color: #EB5530;
+  background-color: #159b0f;
   margin: 0.2rem;
   transition: all 100ms ease-in-out;
 }
@@ -58,6 +57,10 @@ body[data-transitioning] .apps > div {
 	-moz-transform: scale(1.1);
 	box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.4);
 	z-index: 2000;
+    background-color: #159b0f;
+    background: -moz-linear-gradient(-45deg, #58ae56 0%, #159b0f 46%); /* FF3.6+ */
+
+
 }
 .apps ol > li[data-visible = 'false'] {
   visibility: hidden;
@@ -115,29 +118,26 @@ body[data-transitioning] .apps > div {
 
 /* text label */
 .apps ol > li > div > span > span {
-  font-size: -moz-calc(5 * 0.226rem); /* 5pt */
-  /*text-shadow: 1px 1px 3px rgba(0,0,0,0.6);*/
+  font-size: -moz-calc(6.2 * 0.226rem); /* 5pt */
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
 }
 
 .labelWrapper {
   text-transform: capitalize; /* First letter always capitalized */
   color: #fff; /* App label color */
+  letter-spacing: 0.1rem;
   white-space: nowrap; /* NO new lines */
   display: block;
   width: 100%; /* At least 6% of margin between labels of different apps */
   position: absolute;
   bottom: 0;
-  height: 2rem; /* 15px in otoro */
+  height: 2.2rem; /* 15px in otoro */
   margin: 0 auto;
   margin-bottom: .8rem;
-  padding: 4px 0;
-  padding-left: 8px;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
   -moz-box-sizing: border-box;
   font-weight: 300;
   text-align: left;
   /*background-color: #000000;*/
-  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.00), rgba(0, 0, 0, 0.20));
-  background-image: linear-gradient(top, rgba(0, 0, 0, 0.00), rgba(0, 0, 0, 0.20));
-
-
 }

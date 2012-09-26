@@ -582,10 +582,10 @@ const GridManager = (function() {
      * Returns the total number of apps for each page. It could be
      * more clever. Currently there're twelve apps for page
      *
-     * now 10 apps
+     * now 8 apps
      */
     getMaxPerPage: function() {
-      return 5 * 2;
+      return 4 * 3;
     },
 
     getNext: function() {
