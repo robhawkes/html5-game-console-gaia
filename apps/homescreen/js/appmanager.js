@@ -292,7 +292,6 @@ var Applications = (function() {
     if (!app) {
       return;
     }
-
     app.launch(params);
   }
 
