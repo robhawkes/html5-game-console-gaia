@@ -551,30 +551,30 @@ Page.prototype = {
    * Activate icon navigation
    */
   activateIconNavigation: function pg_activateIconNavigation() {
-    var self = this;
-    self.isIconNavigation = true;
+    this.isIconNavigation = true;
 
-    window.addEventListener("keydown", self.handleNavigationEvent, true);
-    window.addEventListener("MozGamepadButtonDown", self.handleNavigationEvent);
-    window.addEventListener("MozGamepadButtonUp", self.handleNavigationEvent);
-    window.addEventListener("MozGamepadAxisMove", self.handleNavigationEvent);
+    window.addEventListener("keydown", this.handleNavigationEvent);
+    window.addEventListener("MozGamepadButtonDown", this.handleNavigationEvent);
+    window.addEventListener("MozGamepadButtonUp", this.handleNavigationEvent);
+    window.addEventListener("MozGamepadAxisMove", this.handleNavigationEvent);
 
-    var firstIcon = self.getFirstIcon();
+    var firstIcon = this.getFirstIcon();
     firstIcon.container.dataset.active = true;
-    self.currentIcon = firstIcon;
+    this.currentIcon = firstIcon;
   },
 
   /*
    * Deactivate icon navigation
    */
   deactivateIconNavigation: function pg_deactivateIconNavigation() {
-    var self = this;
-    self.isIconNavigation = false;
+    this.isIconNavigation = false;
 
-    window.removeEventListener("keydown", self.handleNavigationEvent);
-    window.removeEventListener("MozGamepadButtonDown", self.handleNavigationEvent);
-    window.removeEventListener("MozGamepadButtonUp", self.handleNavigationEvent);
-    window.removeEventListener("MozGamepadAxisMove", self.handleNavigationEvent);
+    console.log("Removing icon navigation listeners");
+
+    window.removeEventListener("keydown", this.handleNavigationEvent);
+    window.removeEventListener("MozGamepadButtonDown", this.handleNavigationEvent);
+    window.removeEventListener("MozGamepadButtonUp", this.handleNavigationEvent);
+    window.removeEventListener("MozGamepadAxisMove", this.handleNavigationEvent);
   },
 
   /*
