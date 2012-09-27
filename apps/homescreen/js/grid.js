@@ -89,6 +89,11 @@ const GridManager = (function() {
         // Down arrow is 40
 
         switch (evt.keyCode) {
+          case 27:
+            if (isIconNavigation) {
+              deactivateIconNavigation();
+            }
+            break;
           case 37:
             if (isIconNavigation) {
               return;
@@ -201,6 +206,12 @@ const GridManager = (function() {
     s_hover.play();
     isIconNavigation = true;
     pages[currentPage].activateIconNavigation();
+  }
+
+  function deactivateIconNavigation() {
+    console.log("Deactivating icon navigation");
+    isIconNavigation = false;
+    pages[currentPage].deactivateIconNavigation();
   }
 
   function setOverlayPanning(deltaX) {

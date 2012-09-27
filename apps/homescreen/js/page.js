@@ -229,6 +229,8 @@ var Page = function(index) {
   this.icons = {};
   this.posLeft = 0;
   this.currentIcon;
+  this.isIconNavigation = false;
+  this.handleNavigationEvent = this.onNavigationEvent.bind(this)
 };
 
 Page.prototype = {
@@ -549,20 +551,13 @@ Page.prototype = {
    * Activate icon navigation
    */
   activateIconNavigation: function pg_activateIconNavigation() {
-    // Fix up this horrible event scoping mess!
     var self = this;
-    window.addEventListener("keydown", function handleNavigationEvent(evt) {
-      self.handleNavigationEvent(evt, self);
-    }, true);
-    window.addEventListener("MozGamepadButtonDown", function handleNavigationEvent(evt) {
-      self.handleNavigationEvent(evt, self);
-    });
-    window.addEventListener("MozGamepadButtonUp", function handleNavigationEvent(evt) {
-      self.handleNavigationEvent(evt, self);
-    });
-    window.addEventListener("MozGamepadAxisMove", function handleNavigationEvent(evt) {
-      self.handleNavigationEvent(evt, self);
-    });
+    self.isIconNavigation = true;
+
+    window.addEventListener("keydown", self.handleNavigationEvent, true);
+    window.addEventListener("MozGamepadButtonDown", self.handleNavigationEvent);
+    window.addEventListener("MozGamepadButtonUp", self.handleNavigationEvent);
+    window.addEventListener("MozGamepadAxisMove", self.handleNavigationEvent);
 
     var firstIcon = self.getFirstIcon();
     firstIcon.container.dataset.active = true;
@@ -570,19 +565,22 @@ Page.prototype = {
   },
 
   /*
-   * De-ctivate icon navigation
+   * Deactivate icon navigation
    */
   deactivateIconNavigation: function pg_deactivateIconNavigation() {
-    window.removeEventListener("keydown", handleNavigationEvent);
-    window.removeEventListener("MozGamepadButtonDown", handleNavigationEvent);
-    window.removeEventListener("MozGamepadButtonUp", handleNavigationEvent);
-    window.removeEventListener("MozGamepadAxisMove", handleNavigationEvent);
+    var self = this;
+    self.isIconNavigation = false;
+
+    window.removeEventListener("keydown", self.handleNavigationEvent);
+    window.removeEventListener("MozGamepadButtonDown", self.handleNavigationEvent);
+    window.removeEventListener("MozGamepadButtonUp", self.handleNavigationEvent);
+    window.removeEventListener("MozGamepadAxisMove", self.handleNavigationEvent);
   },
 
   /*
    * Navigation event handler
    */
-  handleNavigationEvent: function pg_handleNavigationEvent(evt, self) {
+  onNavigationEvent: function pg_onNavigationEvent(evt) {
       var s_hover =  new Audio('./resources/sounds/hover.ogg');
 
       switch (evt.type) {
@@ -597,33 +595,33 @@ Page.prototype = {
              // Possibly need to move this sound
              var s_launch =  new Audio('./resources/sounds/launch.ogg');
              s_launch.play();
-            console.log("Launch application: " + self.currentIcon.descriptor.origin);
-            Applications.getByOrigin(self.currentIcon.descriptor.origin).launch();
+            console.log("Launch application: " + this.currentIcon.descriptor.origin);
+            Applications.getByOrigin(this.currentIcon.descriptor.origin).launch();
             break;
           case 37:
             //console.log("Left");
-            if (!self.currentIcon.container.previousSibling) {
+            if (!this.currentIcon.container.previousSibling) {
               return;
             }
             s_hover.play();
-            var newIcon = self.getIcon(self.currentIcon.container.previousSibling.dataset.origin);
-            self.currentIcon.container.dataset.active = false;
+            var newIcon = this.getIcon(this.currentIcon.container.previousSibling.dataset.origin);
+            this.currentIcon.container.dataset.active = false;
             newIcon.container.dataset.active = true;
-            self.currentIcon = newIcon;
+            this.currentIcon = newIcon;
             break;
           case 38:
             //console.log("Up");
             break;
           case 39:
             //console.log("Right");
-            if (!self.currentIcon.container.nextSibling) {
+            if (!this.currentIcon.container.nextSibling) {
               return;
             }
             s_hover.play();
-            var newIcon = self.getIcon(self.currentIcon.container.nextSibling.dataset.origin);
-            self.currentIcon.container.dataset.active = false;
+            var newIcon = this.getIcon(this.currentIcon.container.nextSibling.dataset.origin);
+            this.currentIcon.container.dataset.active = false;
             newIcon.container.dataset.active = true;
-            self.currentIcon = newIcon;
+            this.currentIcon = newIcon;
             break;
           case 40:
             //console.log("Down");
