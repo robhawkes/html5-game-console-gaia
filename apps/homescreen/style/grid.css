@@ -33,7 +33,8 @@ body[data-transitioning] .apps > div {
 }
 
 .apps ol {
-  width: -moz-calc(4 * 21rem);
+  /*width: -moz-calc(4 * 35.5rem);*/
+  width: 1420px;
   padding: 0;
   list-style-type: none;
   display: block;
@@ -43,13 +44,15 @@ body[data-transitioning] .apps > div {
 
 .apps ol > li {
   position: relative;
-  width: 20rem;
+  /*width: 35rem;*/
+  width: 350px;
   height: 14rem;
   display: inline-block;
   float: left;
   text-align: center;
   background-color: #159b0f;
-  margin: 0.2rem;
+  /*margin: 0.2rem;*/
+  margin: 2px;
   transition: all 100ms ease-in-out;
 }
 

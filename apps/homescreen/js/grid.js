@@ -4,7 +4,8 @@
 const GridManager = (function() {
   var container;
 
-  var windowWidth = window.innerWidth * .73;
+  //var windowWidth = window.innerWidth * .73;
+  var windowWidth = 1600;
   var thresholdForPanning = window.innerWidth / 4;
   var thresholdForTapping = 10;
 
