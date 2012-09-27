@@ -16,7 +16,7 @@
 }
 
 .apps > div.page{
-	  transition: all 100ms ease-in-out;
+	transition: all 100ms ease-in-out;
 }
 
 .apps > div[data-current-page] {
@@ -33,7 +33,7 @@ body[data-transitioning] .apps > div {
 }
 
 .apps ol {
-  width: -moz-calc(4 * 15rem);
+  width: -moz-calc(4 * 21rem);
   padding: 0;
   list-style-type: none;
   display: block;
@@ -43,8 +43,8 @@ body[data-transitioning] .apps > div {
 
 .apps ol > li {
   position: relative;
-  width: 14rem;
-  height: 10.5rem;
+  width: 20rem;
+  height: 14rem;
   display: inline-block;
   float: left;
   text-align: center;
@@ -100,6 +100,9 @@ body[data-transitioning] .apps > div {
   margin-top: .8rem;
   position: relative;
   pointer-events: none; /* NO touchable area */
+}
+.apps ol > li > div > canvas{
+	margin-top: 3rem;
 }
 
 /* Handling the case where the status bar is double size */
