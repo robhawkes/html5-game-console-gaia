@@ -5,13 +5,10 @@ html, body {
   margin: 0;
   border: none;
   font-size: 10px;
-  font-family:'Open Sans';
   overflow: hidden;
-  background-image: url('../resources/images/360.png');
-  background-size: 100%;
-  background-color: #D1D2D2;
-  background-repeat: no-repeat;
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  background-color: #494b4b;
+  background-image: -moz-linear-gradient(top, rgb(56,58,58) 0%, rgb(162,162,162) 58%, rgb(162,162,162) 70%, rgb(125,125,125) 100%);
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 #overlay {
@@ -39,20 +36,45 @@ section,footer,nav,a,img {
   width: 100%;
   height: 4rem;
   position: fixed;
-  top: 80px;
-  left: 10rem;
+  top: 14rem;
+  left: 20rem;
   z-index: 1;
   pointer-events: none;
+  letter-spacing: 2px;
 }
 
 #paginationBar > .paginationScroller {
   width: 100%;
   height: 100%;
-  font-size: 2rem;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-weight: 300;
-  color: #6F7475;
+  font-size: 3rem;
   -moz-transition: -moz-transform .35s ease;
   visibility: hidden;
+  font-smooth: always;
+}
+
+#paginationBar > .paginationScroller > span[data-current] {
+    color: #DBDBDB;
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    -moz-animation-name: glow;
+    -moz-animation-duration: 0.5s;
+    -moz-animation-timing-function: linear;
+}
+
+#paginationBar > .paginationScroller > span {
+    height: 100%;
+    color: #838383;
+    float: left;
+    margin-right: 4rem;
+    text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.4);
+    -moz-transition: all ease-in-out;
+}
+
+@-moz-keyframes glow {
+  0% { text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.8);}
+  100% { text-shadow: 0px 0px 0px rgba(255, 255, 255, 0.8); }
 }
 
 #icongrid {
