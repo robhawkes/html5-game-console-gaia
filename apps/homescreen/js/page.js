@@ -53,8 +53,8 @@ Icon.prototype = {
     // Image
     var canvas = document.createElement('canvas');
     canvas.setAttribute('role', 'presentation');
-    canvas.width = 68;
-    canvas.height = 68;
+    canvas.width = 74;
+    canvas.height = 74;
 
     icon.appendChild(canvas);
 
